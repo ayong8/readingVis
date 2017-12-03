@@ -1,0 +1,18 @@
+.activity-timeline-div{
+	height: 50%;
+	width: 100%;
+	background-color: gray;
+}
+
+.activity-spiral-div{
+	height: 50%;
+	width: 50%;
+	float: left;
+}
+
+.clusters-div{
+	height: 50%;
+	width: 50%;
+	float:right;
+}
+
