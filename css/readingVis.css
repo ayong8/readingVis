@@ -1,27 +1,59 @@
 body{
 	height: 700px;
+	margin-left: 10%;
+	margin-right: 10%;
 }
 
 #title_bar{
 	height: 50px;
 	width: 100%;
 	background-color: #273746;
-	font: 20px bold;
+	font: 25px bold;
 	color: white;
+	display: flex;
+}
+.title_bar_inner_img{
+	height: 100%;
+	width: 3%;
+	float: left;
+	line-height: 200%;
+	margin: 1px;
+	position: relative;
 }
 .title_bar_inner{
+	height: 100%;
+	width: 100%;
 	float: left;
-	line-height: 250%;
+	line-height: 200%;
 	margin: 1px;
 }
 .img_icon{
-	width: 40px;
-	height: 40px;
+	max-height: 80%;  
+    max-width: 80%; 
+    width: auto;
+    height: auto;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;
+    margin: 5px;  
 }
-
+#description{
+	width: 100%;
+	height: 70px;
+}
+.description_detail{
+	background-color: #FBFBFB;
+	border: 0.5px solid #D7D7D7;
+	margin: 3px;
+}
 #activity-timeline-div{
 	height: 40%;
 	width: 100%;
+	padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #D4D4D4;
 }
 
 #activity-spiral-div{
@@ -45,7 +77,6 @@ body{
 }
 
 #spiral-control-div{
-	position: absolute;
 	margin-left: 5px;
 	margin-top: 5px;
 }
@@ -102,22 +133,25 @@ rect {
   left: 0;
 }
 
-#students-list-ul{ 
-	width:50%;
+#students-list-ul{
+	background-color: #90bade;
+	width:100%;
 	height: 100%;
 	overflow: hidden;
+	overflow-y: scroll;
+	margin-bottom: 1em;
+	padding: 0 0 1em 0;
+	border: none;
 	list-style-type: none;
 }
 
 li{
 	background: #E4F0F5;
-	border-radius: 5px 5px 5px 5px;
-	padding:2px;
-	margin:2px;
-	border : 1px solid gray;
-	width:50%;
+	border-bottom: 1px solid #D4D4D4;
+	padding: 10px;
+	margin: 0;
+	width:100%;
 	line-height:1em;
-	border-bottom:1px solid #ccc;
 	float:left;
 	display:inline;
 	cursor: pointer;
@@ -125,4 +159,8 @@ li{
 
 li:hover{
 	background: #008ae6;
+}
+
+h3 {
+	margin-bottom: 3px;
 }

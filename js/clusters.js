@@ -24,8 +24,6 @@ d3.csv("data/students_clusters.csv", function(data) {
     d.Id = d.Id;
   });
 
-  console.log("dd");
-
   var xMax = d3.max(data, function(d) { return d[xCat]; }) * 1.05,
       xMin = d3.min(data, function(d) { return d[xCat]; }),
       xMin = xMin > 0 ? 0 : xMin,
@@ -115,10 +113,12 @@ d3.csv("data/students_clusters.csv", function(data) {
   objects.selectAll(".dot")
       .data(data)
     .enter().append("circle")
-      .attr("class", "dot")
+      .attr("class", function(d, i){
+        return "dot" + (i+1);
+      })
       .attr("id", function(d, i){
         return i+1;
-      })
+      });
 
       .attr("r", function (d) { return 6; })
       .attr("transform", transform)

@@ -16,13 +16,18 @@ d3.selectAll(".student-li")
 			.style("stroke", "black")
 			.style("stroke-width", 2)
 			.attr("opacity", 1);
+
+		d3.select("circle.dot" + stu_id)
+			.style("stroke", "black")
+			.style("stroke-width", 1);
 	})
 	.on("mouseout", function(d){
 		var stu_id = d3.select(this).attr("id");
 		d3.select("path.user" + stu_id)
-			.style("stroke", "gray")
-			.style("stroke-width", 1)
-			.attr("opacity", 0.2);
+			.style("stroke", "none");
+
+		d3.select("circle.dot" + stu_id)
+			.style("stroke", "none");
 	});
 
 d3.selectAll(".dot")

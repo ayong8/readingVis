@@ -16,7 +16,7 @@ var radius = d3.scaleLinear()
   .domain([start, end])
   .range([40, r]);
 
-var svg = d3.select("#activity-spiral-div").append("svg")
+var svg = d3.select("#activity-spiral-view-wrapper").append("svg")
     .attr("width", width)
     .attr("height", height)
     .append("g")
@@ -371,7 +371,7 @@ d3.csv("data/IRFall2016_activity_logs_anonymized.csv", function(data) {
     })
   });
 
-document.getElementById("activity-spiral-div").insertAdjacentHTML("beforeend","<div id='spiral-control-div'><input type='radio' name='spiral-control' value='daily' onclick='changeSpiral(this);' checked>Daily activity</input><input type='radio' name='spiral-control' value='hourly' onclick='changeSpiral(this);'>Hourly activity</input></div>");
+document.getElementByClass("title_spiral").insertAdjacentHTML("afterend","<div id='spiral-control-div'><input type='radio' name='spiral-control' value='daily' onclick='changeSpiral(this);' checked>Daily activity</input><input type='radio' name='spiral-control' value='hourly' onclick='changeSpiral(this);'>Hourly activity</input></div>");
 
   
 

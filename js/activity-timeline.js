@@ -90,7 +90,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 			  .attr("y", function(d, i){
 				return yScale(d.start_page);	
 			  })
-			  .attr("width", view.layout.w - view.layout.p)
+			  .attr("width", view.layout.w - view.layout.p * 2)
 			  .attr("height", function(d, i){
 			  	return yScale(d.end_page) - yScale(d.start_page);
 			  })
@@ -101,7 +101,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 			  		return "none"
 			  	}
 			  })
-			  .attr("opacity", 0.2)
+			  .attr("opacity", 0.2);
 
 		g_rects.append("text")
 				.text(function(d, i){ return d.lec_id; })
