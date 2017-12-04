@@ -1,23 +1,30 @@
 body{
-	height: 680px;
+	height: 700px;
 }
 
-.activity-timeline-div{
-	height: 50%;
+#activity-timeline-div{
+	height: 40%;
 	width: 100%;
 	background-color: gray;
 }
 
-.activity-spiral-div{
-	height: 50%;
-	width: 50%;
-	background-color: blue;
+#activity-spiral-div{
+	height: 60%;
+	width: 35%;
+	/*background-color: gray;*/
 	float: left;
 }
 
-.clusters-div{
-	height: 50%;
-	width: 50%;
+#control-panel-div{
+	height: 60%;
+	width: 25%;
+	background-color: #666666;
+	float:left;
+}
+
+#clusters-div{
+	height: 60%;
+	width: 40%;
 	background-color: orange;
 	float:right;
 }
