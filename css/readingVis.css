@@ -87,11 +87,25 @@ rect {
 
 #students-list-ul{ 
 	width:50%;
+	height: 100%;
+	overflow: hidden;
+	list-style-type: none;
 }
 
 li{
-  line-height:1.5em;
-  border-bottom:1px solid #ccc;
-  float:left;
-  display:inline;
+	background: #E4F0F5;
+	border-radius: 5px 5px 5px 5px;
+	padding:2px;
+	margin:2px;
+	border : 1px solid gray;
+	width:50%;
+	line-height:1em;
+	border-bottom:1px solid #ccc;
+	float:left;
+	display:inline;
+	cursor: pointer;
+}
+
+li:hover{
+	background: #008ae6;
 }
