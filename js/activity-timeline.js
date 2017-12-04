@@ -1,15 +1,8 @@
-var layout = {
-	w: 1000,
-	h: 300,
-	p: 30
-}
-
-// parcoords + timeline
 var view = {
 	rootEle: d3.select(".plot"),
 	layout: {
-		w: 1000,
-		h: 300,
+		w: document.getElementById("activity-timeline-div").offsetWidth,
+		h: document.getElementById("activity-timeline-div").offsetHeight,
 		p: 40
 	}
 }
@@ -17,11 +10,10 @@ var view = {
 var plot = d3.select("#activity-timeline-div"),
 	svg = plot
 			.append("svg")
-			.attr("width", layout.w)
-			.attr("height", layout.h);
+			.attr("width", view.layout.w)
+		    .attr("height", view.layout.h);
 	g_zoom = svg.append("g")
-				.attr("class", "g_zoom")
-				.attr("transform", "translate(0, 0)");
+				.attr("class", "g_zoom");
 
 var dataset = {
 	rawData: [],
@@ -46,12 +38,23 @@ var dataset = {
 
 var datasetPageSequence = {
 	rawData: [],
+	lec_data: [
+		{"lec_id": "lec_1", "start_page": "foa-2357-2", "end_page": "mir2-2384-14"},
+		{"lec_id": "lec_2", "start_page": "iir-2156-38", "end_page": "iir-2412-100"},
+		{"lec_id": "lec_3", "start_page": "iir-2104-104", "end_page": "mir-2155-240"},
+		{"lec_id": "lec_4", "start_page": "iir-2156-10", "end_page": "iir-2176-170"},
+		{"lec_id": "lec_5", "start_page": "iir-2177-274", "end_page": "iir-2188-289"},
+		{"lec_id": "lec_6", "start_page": "iir-2189-188", "end_page": "iir-2216-231"},
+		{"lec_id": "lec_7", "start_page": "mir-2217-269", "end_page": "mir-2261-335"},
+		{"lec_id": "lec_8", "start_page": "iir-2262-458", "end_page": "mir-2309-407"},
+		{"lec_id": "lec_9", "start_page": "iir-2310-290", "end_page": "iir-2356-438"}
+	],
 	bookSequence: ["foa", "ies", "iir", "mir", "mir2"],
 	getPageIds: function(){
 		var _self = this;
 		var pageIdArray = _self.rawData.map(function(d){ return d.page_id; });
 		return pageIdArray;
-	}
+	},
 }	
 
 
@@ -65,16 +68,50 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 
 		console.log(pageIds);
 		
-		var xScale = d3.scaleTime().range([0, view.layout.w]),
+		var xScale = d3.scaleTime().range([view.layout.p, view.layout.w - view.layout.p]),
 	 		yScale = d3.scaleBand().range([view.layout.p, view.layout.h - view.layout.p]);
 
-	 	xScale.domain(d3.extent(dates)).nice();
+	 	xScale.domain(d3.extent(dates));
 	 	yScale.domain(pageIds);
 
-		var xAxis = svg.append("g")
+		var xAxis = g_zoom.append("g")
 						.attr("class", "x-axis1")
 						.attr("transform", "translate(0," + (view.layout.h - view.layout.p) + ")")
-						.call(d3.axisBottom(xScale));
+						.call(d3.axisBottom(xScale).tickSize(0));
+
+		// Add lecture areas in the y-axis
+		var g_rects = g_zoom.selectAll("rect")
+			  					.data(datasetPageSequence.lec_data)
+			  					.enter().append('g')
+			  					.attr("class", "rect_g")
+		g_rects.append("rect")
+			  .attr("class", "lec_rect")
+			  .attr("x", view.layout.p)
+			  .attr("y", function(d, i){
+				return yScale(d.start_page);	
+			  })
+			  .attr("width", view.layout.w - view.layout.p)
+			  .attr("height", function(d, i){
+			  	return yScale(d.end_page) - yScale(d.start_page);
+			  })
+			  .style("fill", function(d, i){
+			  	if(i%2 == 0){
+			  		return "gray"
+			  	}else{
+			  		return "none"
+			  	}
+			  })
+			  .attr("opacity", 0.2)
+
+		g_rects.append("text")
+				.text(function(d, i){ return d.lec_id; })
+				.attr("x", function(d){ return view.layout.w - view.layout.p; })
+				.attr("y", function(d){ return yScale(d.end_page) - 5; })
+				.style("color", "gray")
+				.style("font-size", 9);
+		
+		//g_zoom.selectAll("rect")
+				
 
 	 	// var dimensions = g_zoom.selectAll(".dimension")
 			// 			.data(pageIds)
@@ -137,7 +174,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 
 							return lineColor;
 						})
-						.style("stroke-width", 1.5)
+						.style("stroke-width", 1.0)
 						.style("stroke-dasharray", function(d, i){
 							if(typeof log_data[i+1] != "undefined"){
 								var dasharray = "none";
@@ -148,7 +185,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 
 							return dasharray;
 						})
-						.attr("opacity", 0.8);
+						.attr("opacity", 0.7);
 						// .on("mouseover", function(d, i){
 						// 	console.log(d3.select(this).attr("class"));
 						// 	var lineclass = d3.select(this).attr("class");
@@ -193,7 +230,9 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 						.attr("r", 0.5)
 						.attr("cx", function(d, i){ return xScale(new Date(Date.parse(d.date))); })
 						.attr("cy", function(d, i){ return yScale(d.id); })
-						.style("fill", "purple");
+						.style("fill", "none")
+						.style("stroke", black)
+						.style("stroke-width", 1);
 
 		// Zoom Function
 		var zoom = d3.zoom()
@@ -216,7 +255,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 			//lines.attr("transform", d3.event.transform);
 		};
 
-		console.log()
+		
 
 		// Mark important events
 		// Midterm line
