@@ -17,7 +17,6 @@ body{
 #control-panel-div{
 	height: 60%;
 	width: 25%;
-	background-color: #666666;
 	float:left;
 }
 
@@ -34,3 +33,15 @@ body{
 	margin-top: 5px;
 }
 
+ul {
+        margin:0;
+}
+ul li {
+    line-height:33px;
+    padding:0 5px;
+    border-bottom:1px ridge #aaa;
+    margin:0;
+}
+ul li:last-child {
+    border:none;
+}

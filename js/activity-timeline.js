@@ -71,7 +71,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 		var xScale = d3.scaleTime().range([view.layout.p, view.layout.w - view.layout.p]),
 	 		yScale = d3.scaleBand().range([view.layout.p, view.layout.h - view.layout.p]);
 
-	 	xScale.domain(d3.extent(dates));
+	 	xScale.domain(d3.extent(dates)).nice();
 	 	yScale.domain(pageIds);
 
 		var xAxis = g_zoom.append("g")
@@ -135,67 +135,67 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 							return line(d);
 						}
 
-		var lines = g_zoom.append("g")
-						.attr("class", "lines")
-						.selectAll("line")
-						.data(log_data)
-						.enter().append("line")
-						.attr("class", function(d){
-							return "user" + d.usr;
-						})
-						.attr("x1", function(d, i){ return xScale(new Date(Date.parse(d.date))); })
-						.attr("y1", function(d, i){ return yScale(d.id); })
-						.attr("x2", function(d, i){
-							if(typeof log_data[i+1] != "undefined"){
-								return xScale(new Date(Date.parse(log_data[i+1]["date"])));
-							}else{
-								return xScale(new Date(Date.parse(log_data[i]["date"])));
-							}
-						})
-						.attr("y2", function(d, i){
-							if(typeof log_data[i+1] != "undefined"){
-								return yScale(log_data[i+1]["id"]);
-							}else{
-								return yScale(log_data[i]["id"]);
-							}
-						})
-						.style("stroke", function(d, i){
-							var lineColor = "blue";
-							// If it goes forward == if the page for the next log comes later than the current page
-							if(typeof log_data[i+1] != "undefined"){
-								if(pageIds.indexOf(d.id) < pageIds.indexOf(log_data[i+1]["id"])){
-									lineColor = "blue";
-								}else if(pageIds.indexOf(d.id) > pageIds.indexOf(log_data[i+1]["id"])){
-									lineColor = "red";
-								}else{
-									lineColor = "gray";
-								}
-							}
+		// var lines = g_zoom.append("g")
+		// 				.attr("class", "lines")
+		// 				.selectAll("line")
+		// 				.data(log_data)
+		// 				.enter().append("line")
+		// 				.attr("class", function(d){
+		// 					return "user" + d.usr;
+		// 				})
+		// 				.attr("x1", function(d, i){ return xScale(new Date(Date.parse(d.date))); })
+		// 				.attr("y1", function(d, i){ return yScale(d.id); })
+		// 				.attr("x2", function(d, i){
+		// 					if(typeof log_data[i+1] != "undefined"){
+		// 						return xScale(new Date(Date.parse(log_data[i+1]["date"])));
+		// 					}else{
+		// 						return xScale(new Date(Date.parse(log_data[i]["date"])));
+		// 					}
+		// 				})
+		// 				.attr("y2", function(d, i){
+		// 					if(typeof log_data[i+1] != "undefined"){
+		// 						return yScale(log_data[i+1]["id"]);
+		// 					}else{
+		// 						return yScale(log_data[i]["id"]);
+		// 					}
+		// 				})
+		// 				.style("stroke", function(d, i){
+		// 					var lineColor = "blue";
+		// 					// If it goes forward == if the page for the next log comes later than the current page
+		// 					if(typeof log_data[i+1] != "undefined"){
+		// 						if(pageIds.indexOf(d.id) < pageIds.indexOf(log_data[i+1]["id"])){
+		// 							lineColor = "blue";
+		// 						}else if(pageIds.indexOf(d.id) > pageIds.indexOf(log_data[i+1]["id"])){
+		// 							lineColor = "red";
+		// 						}else{
+		// 							lineColor = "gray";
+		// 						}
+		// 					}
 
-							return lineColor;
-						})
-						.style("stroke-width", 1.0)
-						.style("stroke-dasharray", function(d, i){
-							if(typeof log_data[i+1] != "undefined"){
-								var dasharray = "none";
-								if(pageIds.indexOf(d.id) == pageIds.indexOf(log_data[i+1]["id"])){
-									dasharray = "5, 5";
-								}
-							}
+		// 					return lineColor;
+		// 				})
+		// 				.style("stroke-width", 1.0)
+		// 				.style("stroke-dasharray", function(d, i){
+		// 					if(typeof log_data[i+1] != "undefined"){
+		// 						var dasharray = "none";
+		// 						if(pageIds.indexOf(d.id) == pageIds.indexOf(log_data[i+1]["id"])){
+		// 							dasharray = "5, 5";
+		// 						}
+		// 					}
 
-							return dasharray;
-						})
-						.attr("opacity", 0.7);
-						// .on("mouseover", function(d, i){
-						// 	console.log(d3.select(this).attr("class"));
-						// 	var lineclass = d3.select(this).attr("class");
-						// 	d3.selectAll("path." + lineclass).style("stroke", "black");
-						// })
-						// .on("mouseout", function(d, i){
-						// 	console.log(d3.select(this).attr("class"));
-						// 	var lineclass = d3.select(this).attr("class");
-						// 	d3.selectAll("path." + lineclass).style("stroke", "none");
-						// });
+		// 					return dasharray;
+		// 				})
+		// 				.attr("opacity", 0.7);
+		// 				// .on("mouseover", function(d, i){
+		// 				// 	console.log(d3.select(this).attr("class"));
+		// 				// 	var lineclass = d3.select(this).attr("class");
+		// 				// 	d3.selectAll("path." + lineclass).style("stroke", "black");
+		// 				// })
+		// 				// .on("mouseout", function(d, i){
+		// 				// 	console.log(d3.select(this).attr("class"));
+		// 				// 	var lineclass = d3.select(this).attr("class");
+		// 				// 	d3.selectAll("path." + lineclass).style("stroke", "none");
+		// 				// });
 
 		var paths = g_zoom.append("g")
 						.attr("class", "paths")
@@ -231,7 +231,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 						.attr("cx", function(d, i){ return xScale(new Date(Date.parse(d.date))); })
 						.attr("cy", function(d, i){ return yScale(d.id); })
 						.style("fill", "none")
-						.style("stroke", black)
+						.style("stroke", "black")
 						.style("stroke-width", 1);
 
 		// Zoom Function
