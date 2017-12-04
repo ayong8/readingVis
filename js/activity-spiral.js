@@ -45,6 +45,7 @@ d3.csv("data/IRFall2016_activity_logs_anonymized.csv", function(data) {
       N = 110,
       barWidth = (spiralLength / N) - 1;
   var activityData = [];
+  var hourlyActivityData = [];
   /*for (var i = 0; i < N; i++) {
     var currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + i);
@@ -55,9 +56,10 @@ d3.csv("data/IRFall2016_activity_logs_anonymized.csv", function(data) {
   }*/
 
   map_date_id = {};
+  map_datehour_id ={};
 
   for (var i = 0; i < N; i++) {
-    var date = new Date(2016,7,26);
+    var date = new Date(2016,7,26,0,0,0,0);
     date.setDate(date.getDate() + i);
     //var day = date.getDate();
     //var month = date.getMonth()+1;//Months in javascript start from zero
@@ -71,7 +73,32 @@ d3.csv("data/IRFall2016_activity_logs_anonymized.csv", function(data) {
     map_date_id[date_string] = i;
     activityData.push({date: date, value: 0, students_act:{}});
   }
-  //console.log(map_date_id);
+
+  for (var i = 0; i < N; i++) {
+    var date = new Date(2016,7,26,0,0,0,0);
+    date.setDate(date.getDate() + i);
+    for(var j = 0; j<24; j++){
+      
+      /*someData.push({
+        date: currentDate,
+        value: Math.random()
+      });*/
+      map_datehour_id[date_string] = i*24 + j;
+      date_string = formatDateHour(date);
+      hourlyActivityData.push({date: date, value: 0, students_act:{}});
+      date.setHours(date.getHours()+1)
+      
+      
+    }
+    //var day = date.getDate();
+    //var month = date.getMonth()+1;//Months in javascript start from zero
+    //var year = date.getFullYear();
+    //date_string = month+"/"+day+"/"+year.toString().substr(2,2);
+    
+  }
+  
+  console.log(map_date_id);
+  console.log(map_datehour_id);
 
   for(var i = 0; i<data.length; i++){
     var log = data[i];
@@ -93,6 +120,8 @@ d3.csv("data/IRFall2016_activity_logs_anonymized.csv", function(data) {
     }
     //activityData[map_date_id[date_string]].value++;
   }
+
+  
 
   for(var i = 0; i<activityData.length; i++){
     if(activityData[i]){
@@ -239,4 +268,20 @@ function formatDate(date) {
   if (day.length < 2) day = '0' + day;
 
   return [year, month, day].join('-');
+}
+
+function formatDateHour(date) {
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear(),
+      hour = d.getHours().toString();
+
+  if (month.length < 2) month = '0' + month;
+  if (day.length < 2) day = '0' + day;
+  if (hour.length <2) hour = '0' + hour;
+  
+  datetime_string = [year, month, day].join('-');
+  datetime_string = datetime_string + " "+ hour;
+  return datetime_string;
 }
