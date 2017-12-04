@@ -24,6 +24,8 @@ d3.csv("data/students_clusters.csv", function(data) {
     d.Id = d.Id;
   });
 
+  console.log("dd");
+
   var xMax = d3.max(data, function(d) { return d[xCat]; }) * 1.05,
       xMin = d3.min(data, function(d) { return d[xCat]; }),
       xMin = xMin > 0 ? 0 : xMin,

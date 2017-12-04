@@ -5,10 +5,6 @@ for(var i=id_first_user; i<=id_last_user; i++){
 	document.getElementById("students-list-ul").insertAdjacentHTML("beforeend","<li class='student-li' id='"+i+"'>"+i+"</li>");
 }
 
-$(document).ready(function(){
-	console.log("jquery");
-});
-
 console.log("hhh");
 console.log(d3.selectAll(".lec_rect"));
 
