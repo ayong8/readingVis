@@ -314,7 +314,7 @@ d3.csv("data/IRFall2016_activity_logs_anonymized.csv", function(data) {
 
   // add date labels
   var tF = d3.timeFormat("%b %Y"),
-      tF2 = d3.timeFormat("%a"),
+      tF2 = d3.timeFormat("%a %d"),
       firstInMonth = {};
   /*svg.selectAll("text")
     .data(activityData)
@@ -347,9 +347,9 @@ d3.csv("data/IRFall2016_activity_logs_anonymized.csv", function(data) {
     .data(activityData)
     .enter()
     .append("text")
-    .attr("dy", 0)
+    .attr("dy", 8)
     .style("text-anchor", "start")
-    .style("font", "8px arial")
+    .style("font", "7px arial")
     .append("textPath")
     // only add for the first of each month
     /*.filter(function(d){

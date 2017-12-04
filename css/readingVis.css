@@ -23,7 +23,7 @@ body{
 #clusters-div{
 	height: 60%;
 	width: 40%;
-	background-color: orange;
+	background-color: white;
 	float:right;
 }
 
@@ -33,15 +33,65 @@ body{
 	margin-top: 5px;
 }
 
-ul {
-        margin:0;
+rect {
+  fill: transparent;
+  shape-rendering: crispEdges;
 }
-ul li {
-    line-height:33px;
-    padding:0 5px;
-    border-bottom:1px ridge #aaa;
-    margin:0;
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.1);
+  shape-rendering: crispEdges;
 }
-ul li:last-child {
-    border:none;
+
+.axisLine {
+  fill: none;
+  shape-rendering: crispEdges;
+  stroke: rgba(0, 0, 0, 0.5);
+  stroke-width: 2px;
+}
+
+.dot {
+  fill-opacity: .5;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+#students-list-ul{ 
+	width:50%;
+}
+
+li{
+  line-height:1.5em;
+  border-bottom:1px solid #ccc;
+  float:left;
+  display:inline;
 }
