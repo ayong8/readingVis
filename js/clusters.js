@@ -114,7 +114,7 @@ d3.csv("data/students_clusters.csv", function(data) {
       .data(data)
     .enter().append("circle")
       .attr("class", function(d, i){
-        return "dot" + (i+1);
+        return "dot";
       })
       .attr("id", function(d, i){
         return i+1;

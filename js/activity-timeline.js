@@ -65,11 +65,9 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 		var pageIds = datasetPageSequence.getPageIds(),
 			dates = dataset.getDates(),
 			pathData = dataset.setPathData();
-
-		console.log(pageIds);
 		
 		var xScale = d3.scaleTime().range([view.layout.p, view.layout.w - view.layout.p]),
-	 		yScale = d3.scaleBand().range([view.layout.p, view.layout.h - view.layout.p]);
+	 		yScale = d3.scaleBand().range([0, view.layout.h - view.layout.p]);
 
 	 	xScale.domain(d3.extent(dates)).nice();
 	 	yScale.domain(pageIds);
@@ -105,8 +103,8 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 
 		g_rects.append("text")
 				.text(function(d, i){ return d.lec_id; })
-				.attr("x", function(d){ return view.layout.w - view.layout.p; })
-				.attr("y", function(d){ return yScale(d.end_page) - 5; })
+				.attr("x", 10)
+				.attr("y", function(d){ return yScale(d.start_page) + 10; })
 				.style("color", "gray")
 				.style("font-size", 9);
 		
@@ -206,17 +204,20 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 							return "user" + (i+1);
 						})
 						.attr("d", drawPath)
-						.attr("opacity", 0.2)
+						.attr("opacity", 0.3)
 						.style("stroke", function(d, i){
 							//return "rgb(" + (100+i*3) + "," + (255-i*5) + "," + (i*5) + ")";
 							return "black";
 						})
 						.style("fill", "none")
+						.style("stroke-width", 1.5)
 						.on("mouseover", function(d, i){
-							d3.select(this).style("stroke", "black").style("stroke-width", "3px");
+							d3.select(this).style("stroke", "red")
+											.style("stroke-width", 2);
 						})
 						.on("mouseout", function(d){
-							d3.select(this).style("stroke", "none");
+							d3.select(this).style("stroke", "blue")
+											.style("stroke-width", 1.5);
 						});
 
 		var circles = g_zoom.append("g")
@@ -231,7 +232,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 						.attr("cx", function(d, i){ return xScale(new Date(Date.parse(d.date))); })
 						.attr("cy", function(d, i){ return yScale(d.id); })
 						.style("fill", "none")
-						.style("stroke", "black")
+						.style("stroke", "blue")
 						.style("stroke-width", 1);
 
 		// Zoom Function
@@ -251,8 +252,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 
 			// update circle
 			circles.attr("cx", function(d, i){ return new_xScale(new Date(Date.parse(d.date))); });
-			//paths.attr("transform", d3.event.transform);
-			//lines.attr("transform", d3.event.transform);
+			paths.attr("transform", d3.event.transform);
 		};
 
 		
@@ -265,7 +265,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 				.attr("y1", 10)
 				.attr("x2", xScale(new Date(Date.parse("10/31/16 00:00"))))
 				.attr("y2", view.layout.h - view.layout.p)
-				.style("stroke", "black")
+				.style("stroke", "red")
 				.style("stroke-width", 3)
 				.style("stroke-dasharray", "6,6");
 				
@@ -274,7 +274,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 
 		// Midterm circle
 		g_zoom.append("circle")
-				.attr("r", 2)
+				.attr("r", 3)
 				.attr("cx", xScale(new Date(Date.parse("10/31/16 00:00"))))
 				.attr("cy", view.layout.h - view.layout.p)
 				.style("fill", "red");
