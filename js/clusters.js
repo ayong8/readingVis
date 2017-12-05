@@ -118,8 +118,7 @@ d3.csv("data/students_clusters.csv", function(data) {
       })
       .attr("id", function(d, i){
         return i+1;
-      });
-
+      })
       .attr("r", function (d) { return 6; })
       .attr("transform", transform)
       .style("fill", function(d) { return color(d[colorCat]); })
