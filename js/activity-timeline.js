@@ -3,7 +3,7 @@ var view = {
 	layout: {
 		w: document.getElementById("activity-timeline-div").offsetWidth,
 		h: document.getElementById("activity-timeline-div").offsetHeight,
-		p: 40
+		p: 20
 	}
 }
 
@@ -67,7 +67,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 			pathData = dataset.setPathData();
 		
 		var xScale = d3.scaleTime().range([view.layout.p, view.layout.w - view.layout.p]),
-	 		yScale = d3.scaleBand().range([0, view.layout.h - view.layout.p]);
+	 		yScale = d3.scaleBand().range([view.layout.p, view.layout.h - view.layout.p]);
 
 	 	xScale.domain(d3.extent(dates)).nice();
 	 	yScale.domain(pageIds);
@@ -206,18 +206,19 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 						.attr("d", drawPath)
 						.attr("opacity", 0.3)
 						.style("stroke", function(d, i){
-							//return "rgb(" + (100+i*3) + "," + (255-i*5) + "," + (i*5) + ")";
 							return "black";
 						})
 						.style("fill", "none")
 						.style("stroke-width", 1.5)
 						.on("mouseover", function(d, i){
 							d3.select(this).style("stroke", "red")
-											.style("stroke-width", 2);
+											.style("stroke-width", 2)
+											.attr("opacity", 1);;
 						})
 						.on("mouseout", function(d){
-							d3.select(this).style("stroke", "blue")
-											.style("stroke-width", 1.5);
+							d3.select(this).style("stroke", "black")
+											.style("stroke-width", 1)
+											.attr("opacity", 0.2);
 						});
 
 		var circles = g_zoom.append("g")
@@ -262,7 +263,7 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 		g_zoom.append("line")
 				.attr("class", "line_midterm")
 				.attr("x1", xScale(new Date(Date.parse("10/31/16 00:00"))))
-				.attr("y1", 10)
+				.attr("y1", view.layout.p)
 				.attr("x2", xScale(new Date(Date.parse("10/31/16 00:00"))))
 				.attr("y2", view.layout.h - view.layout.p)
 				.style("stroke", "red")
@@ -270,7 +271,11 @@ d3.csv("./data/reading_logs_min.csv", function(error, log_data){
 				.style("stroke-dasharray", "6,6");
 				
 		g_zoom.append("text")
-				.attr("text", "midterm");
+				.text("Midterm")
+				.attr("x", xScale(new Date(Date.parse("10/31/16 00:00"))) - 20)
+				.attr("y", 15)
+				.style("color", "black")
+				.style("font-size", 10);
 
 		// Midterm circle
 		g_zoom.append("circle")

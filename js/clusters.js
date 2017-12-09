@@ -110,20 +110,41 @@ d3.csv("data/students_clusters.csv", function(data) {
       .attr("x2", 0)
       .attr("y2", height);
 
+
   objects.selectAll(".dot")
       .data(data)
-    .enter().append("circle")
+      .enter().append("circle")
       .attr("class", function(d, i){
-        return "dot";
+        return "dot dot_" + (i+1);
       })
       .attr("id", function(d, i){
         return i+1;
       })
-      .attr("r", function (d) { return 6; })
+      .attr("r", function(d) { return 6; })
       .attr("transform", transform)
       .style("fill", function(d) { return color(d[colorCat]); })
-      .on("mouseover", tip.show)
-      .on("mouseout", tip.hide);
+      .on("mouseover", function(d, i){
+        tip.show(d);
+
+        d3.select(this)
+          .style("stroke", "black")
+          .style("stroke-width", 3);
+          
+        d3.select("path.user" + (i+1))
+          .style("stroke", "black")
+          .style("stroke-width", 2)
+          .attr("opacity", 1);
+      })
+      .on("mouseout", function(d, i){
+        tip.hide(d);
+
+        d3.select(this).style("stroke", "none");
+
+        d3.select("path.user" + (i+1))
+          .style("stroke", "black")
+          .style("stroke-width", 1)
+          .attr("opacity", 0.2);
+      });
 
   var legend = svg.selectAll(".legend")
       .data(color.domain())
