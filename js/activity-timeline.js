@@ -2,7 +2,7 @@ var view = {
 	rootEle: d3.select(".plot"),
 	layout: {
 		w: document.getElementById("activity-timeline-div").offsetWidth,
-		h: document.getElementById("activity-timeline-div").offsetHeight,
+		h: document.getElementById("activity-timeline-div").offsetHeight - 150,
 		p: 20
 	}
 }

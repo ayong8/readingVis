@@ -41,7 +41,7 @@ d3.csv("data/students_clusters.csv", function(data) {
       .tickSize(-width);
 
   //var color = d3.scale.category10();
-  var color = d3.scaleOrdinal().range(["green","red","blue"])
+  var color = d3.scaleOrdinal().range(["#1ABC9C","#154360","#B500C2"])
   var tip = d3.tip()
       .attr("class", "d3-tip")
       .offset([-10, 0])
